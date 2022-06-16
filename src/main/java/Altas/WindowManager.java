@@ -32,6 +32,7 @@ public class WindowManager{
         return new WindowManager(1920, 1080, "AtlasEngine");
     }
 
+    // Method that initialises the window and starts the window loop
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
@@ -39,6 +40,7 @@ public class WindowManager{
         loop();
     }
 
+    // Method to initialise the window
     public void init() {
         GLFWErrorCallback.createPrint(System.err).set(); // Sets System.err as a default implementation to display any error messages
 
@@ -55,9 +57,32 @@ public class WindowManager{
 
         // Create the window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        if (glfwWindow == NULL) {
+            throw new IllegalStateException("Failed to create the GLFW window.");
+        }
+
+        glfwMakeContextCurrent(glfwWindow); // Make the OpenGL context current
+
+        glfwSwapInterval(1); // Enable V-Sync
+
+        glfwShowWindow(glfwWindow); // Make the window visible
+
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes the OpenGL
+        // bindings available for use.
+        GL.createCapabilities();
     }
 
+    // Method to start the window loop
     public void loop() {
-
+        // Run the rendering loop until the user has attempted to close the window or has pressed the ESCAPE key
+        while (!glfwWindowShouldClose(glfwWindow)) {
+            glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // Sets the colour of the window
+            glClear(GL_COLOR_BUFFER_BIT); // clean the framebuffer
+            glfwSwapBuffers(glfwWindow); // swap the colour buffers
+            glfwPollEvents(); // Poll for window events
+        }
     }
 }
