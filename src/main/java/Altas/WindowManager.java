@@ -20,7 +20,7 @@ public class WindowManager{
     private final String title;
     private long glfwWindow;
 
-    // Constructor Method. Private so this is a singleton method, only the WindowManager class can create it
+    // Constructor Method. Private so this is a singleton method, only the WindowManager class can create it, not objects created from the class
     private WindowManager(int width, int height, String title) {
         this.width = width;
         this.height = height;
@@ -40,8 +40,7 @@ public class WindowManager{
     }
 
     public void init() {
-        // Sets System.err as a default implementation to display any error messages
-        GLFWErrorCallback.createPrint(System.err).set();
+        GLFWErrorCallback.createPrint(System.err).set(); // Sets System.err as a default implementation to display any error messages
 
         // Initialize GLFW
         if (!glfwInit()) {
