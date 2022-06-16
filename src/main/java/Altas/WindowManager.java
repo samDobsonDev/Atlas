@@ -28,8 +28,8 @@ public class WindowManager{
     }
 
     // Method to create an object from the WindowManager class, then return it. Passing in the arguments specified in the constructor
-    public static WindowManager getNewWindow() {
-        return new WindowManager(1920, 1080, "AtlasEngine");
+    public static WindowManager createWindowObject() {
+        return new WindowManager(400, 225, "AtlasEngine");
     }
 
     // Method that initialises the window and starts the window loop
@@ -57,6 +57,7 @@ public class WindowManager{
 
         // Create the window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
+        glfwSetWindowSize(glfwWindow, 800, 450);
         if (glfwWindow == NULL) {
             throw new IllegalStateException("Failed to create the GLFW window.");
         }
